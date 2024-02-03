@@ -9,6 +9,25 @@ navigation.addEventListener('navigate', navigateEvent => {
 
 log("loaded")
 
+let bannerRemoved = false
+let timer = setTimeout(removeBanner, 1e3)
+removeBanner()
+
+function removeBanner() {
+  const navbar = document.querySelector("#navbar-container")
+  for (const child of navbar.children) {
+    if (child.id === "leetcode-navbar") {
+      continue
+    } else if (child.querySelector("a[href*='//leetcode.cn']")){
+      log('removing banner')
+      navbar.removeChild(child)
+      bannerRemoved = true
+    }
+  }
+  bannerRemoved && clearInterval(timer)
+}
+
 function log(...args) {
     console.log("[no-leetcode-cn-redirect]", ...args)
 }
+
